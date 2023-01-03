@@ -1,0 +1,8 @@
+{
+  "actions" : {
+    "build" : {
+      "enabled" : true,
+      "path" : "scripts\/build-library.sh"
+    }
+  }
+}

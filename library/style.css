@@ -1,0 +1,250 @@
+/* Set core body defaults */
+body {
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: system-ui;
+  font-size: min(28px, calc(12px + 3vw));
+  touch-action: manipulation;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* https://www.fontspace.com/pixeboy-font-f43730 */
+@font-face {
+  font-family: 'Pixeboy';
+  src: url('./Pixeboy.ttf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* TODO: remove styles? */
+
+/* Styles */
+
+:root {
+  /* --theme: hsl(131, 65%, 61%); */
+  --theme: #3cdd59;
+  /* --theme: #016fb9; */
+  /* --theme: #ff6b6c; */
+  /* --theme: #ffc144; */
+  /* --theme: #ec0868; */
+  /* --theme: #c200fb; */
+  /* --theme: #fc3000; */
+
+  --ratio: 1.5;
+  --scale-5: calc(var(--scale-4) / var(--ratio));
+  --scale-4: calc(var(--scale-3) / var(--ratio));
+  --scale-3: calc(var(--scale-2) / var(--ratio));
+  --scale-2: calc(var(--scale-1) / var(--ratio));
+  --scale-1: calc(var(--scale) / var(--ratio));
+  --scale: 1rem;
+  --scale1: calc(var(--scale) * var(--ratio));
+  --scale2: calc(var(--scale1) * var(--ratio));
+  --scale3: calc(var(--scale2) * var(--ratio));
+  --scale4: calc(var(--scale3) * var(--ratio));
+  --scale5: calc(var(--scale4) * var(--ratio));
+}
+
+gamedoy-actions::part(button),
+gamedoy-dpad::part(button) {
+  margin: 0;
+  border: var(--scale-5) solid rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.4);
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
+  -webkit-user-select: none !important;
+  font-family: 'Pixeboy', ui-monospace, monospace;
+  /* TODO — parcel ignores the prefixed if this is set */
+  /* user-select: none !important; */
+}
+gamedoy-actions::part(button):active,
+gamedoy-dpad::part(button):active {
+  filter: none;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Gameboy */
+gamedoy-console {
+  width: 100vw;
+  height: var(--window-height, 100vh);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--theme);
+  padding: var(--scale);
+
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  grid-template-areas:
+    'display display'
+    'dpad    actions';
+  gap: var(--scale-1);
+}
+gamedoy-console > gamedoy-display {
+  grid-area: display;
+  justify-self: center;
+  background: black;
+}
+gamedoy-console > gamedoy-dpad {
+  grid-area: dpad;
+
+  justify-self: flex-start;
+  align-self: center;
+}
+gamedoy-console > gamedoy-actions {
+  grid-area: actions;
+
+  justify-self: flex-end;
+  align-self: center;
+}
+/* Ngage mode */
+@media (min-width: 772px) {
+  gamedoy-console {
+    grid-template-columns: max-content max-content max-content;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'dpad display actions';
+    justify-content: space-between;
+  }
+}
+/* Mini mode */
+@media (max-width: 349px) {
+  gamedoy-actions {
+    flex-direction: column-reverse;
+    gap: var(--scale1);
+  }
+  gamedoy-actions::part(button) {
+    position: unset;
+  }
+}
+
+/* Game display */
+gamedoy-display {
+  aspect-ratio: 1 / 1;
+  padding: var(--scale-1);
+  background-color: #000;
+  border-radius: 6px;
+  width: 100vw;
+  height: 100vh;
+  max-width: 400px;
+  max-height: 400px;
+}
+gamedoy-display::part(frame) {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: #555;
+  display: block;
+}
+
+/* TODO: does this work? */
+gamedoy-display::part(frame) > * {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+  === DPAD ===
+*/
+gamedoy-dpad {
+  display: grid;
+  grid-template: repeat(3, 50px) / repeat(3, 50px);
+  grid-template-areas:
+    '.    up    .    '
+    'left center right'
+    '.    down      .';
+  touch-action: none;
+  margin: -1rem;
+  padding: 1rem;
+}
+gamedoy-dpad::part(button) {
+  padding: 0;
+}
+gamedoy-dpad::part(up) {
+  grid-area: up;
+  border-bottom-width: 0;
+  border-top-left-radius: var(--scale);
+  border-top-right-radius: var(--scale);
+}
+gamedoy-dpad::part(left) {
+  grid-area: left;
+  border-right-width: 0;
+  border-top-left-radius: var(--scale);
+  border-bottom-left-radius: var(--scale);
+}
+gamedoy-dpad::part(down) {
+  grid-area: down;
+  border-top-width: 0;
+  border-bottom-left-radius: var(--scale);
+  border-bottom-right-radius: var(--scale);
+}
+gamedoy-dpad::part(right) {
+  grid-area: right;
+  border-left-width: 0;
+  border-top-right-radius: var(--scale);
+  border-bottom-right-radius: var(--scale);
+}
+gamedoy-dpad::part(center) {
+  background-color: rgba(255, 255, 255, 0.4);
+  grid-area: center;
+
+  pointer-events: none;
+}
+
+/*
+  === ACTIONS ===
+*/
+
+gamedoy-actions {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  touch-action: none;
+}
+
+gamedoy-actions::part(button) {
+  padding: 24px;
+  line-height: 1rem;
+  font-size: 2rem;
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  filter: drop-shadow(-1px 2px 3px rgba(0, 0, 0, 0.1));
+}
+@media (min-width: 350px) {
+  gamedoy-actions::part(a) {
+    position: relative;
+    top: 0.5em;
+  }
+  gamedoy-actions::part(b) {
+    position: relative;
+    top: -0.5em;
+  }
+}
