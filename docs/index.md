@@ -1,5 +1,5 @@
 ---
-layout: docs.njk
+layout: html.njk
 title: Docs
 ---
 
