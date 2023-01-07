@@ -49,33 +49,33 @@ select {
 /* Styles */
 
 :root {
-  /* --theme: hsl(131, 65%, 61%); */
-  --theme: #3cdd59;
-  /* --theme: #016fb9; */
-  /* --theme: #ff6b6c; */
-  /* --theme: #ffc144; */
-  /* --theme: #ec0868; */
-  /* --theme: #c200fb; */
-  /* --theme: #fc3000; */
+  /* --gdy-theme: hsl(131, 65%, 61%); */
+  --gdy-theme: #3cdd59;
+  /* --gdy-theme: #016fb9; */
+  /* --gdy-theme: #ff6b6c; */
+  /* --gdy-theme: #ffc144; */
+  /* --gdy-theme: #ec0868; */
+  /* --gdy-theme: #c200fb; */
+  /* --gdy-theme: #fc3000; */
 
-  --ratio: 1.5;
-  --scale-5: calc(var(--scale-4) / var(--ratio));
-  --scale-4: calc(var(--scale-3) / var(--ratio));
-  --scale-3: calc(var(--scale-2) / var(--ratio));
-  --scale-2: calc(var(--scale-1) / var(--ratio));
-  --scale-1: calc(var(--scale) / var(--ratio));
-  --scale: 1rem;
-  --scale1: calc(var(--scale) * var(--ratio));
-  --scale2: calc(var(--scale1) * var(--ratio));
-  --scale3: calc(var(--scale2) * var(--ratio));
-  --scale4: calc(var(--scale3) * var(--ratio));
-  --scale5: calc(var(--scale4) * var(--ratio));
+  --gdy-ratio: 1.5;
+  --gdy-s-5: calc(var(--gdy-s-4) / var(--gdy-ratio));
+  --gdy-s-4: calc(var(--gdy-s-3) / var(--gdy-ratio));
+  --gdy-s-3: calc(var(--gdy-s-2) / var(--gdy-ratio));
+  --gdy-s-2: calc(var(--gdy-s-1) / var(--gdy-ratio));
+  --gdy-s-1: calc(var(--gdy-s) / var(--gdy-ratio));
+  --gdy-s: 1rem;
+  --gdy-s1: calc(var(--gdy-s) * var(--gdy-ratio));
+  --gdy-s2: calc(var(--gdy-s1) * var(--gdy-ratio));
+  --gdy-s3: calc(var(--gdy-s2) * var(--gdy-ratio));
+  --gdy-s4: calc(var(--gdy-s3) * var(--gdy-ratio));
+  --gdy-s5: calc(var(--gdy-s4) * var(--gdy-ratio));
 }
 
 gamedoy-actions::part(button),
 gamedoy-dpad::part(button) {
   margin: 0;
-  border: var(--scale-5) solid rgba(0, 0, 0, 0.25);
+  border: var(--gdy-s-5) solid rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 255, 255, 0.4);
   font-size: 24px;
   font-weight: bold;
@@ -94,18 +94,18 @@ gamedoy-dpad::part(button):active {
 /* Gameboy */
 gamedoy-console {
   width: 100vw;
-  height: var(--window-height, 100vh);
+  height: var(--gdy-window-height, 100vh);
   display: flex;
   flex-direction: column;
-  background-color: var(--theme);
-  padding: var(--scale);
+  background-color: var(--gdy-theme);
+  padding: var(--gdy-s);
 
   display: grid;
   grid-template: 1fr 1fr / 1fr 1fr;
   grid-template-areas:
     'display display'
     'dpad    actions';
-  gap: var(--scale-1);
+  gap: var(--gdy-s-1);
 }
 gamedoy-console > gamedoy-display {
   grid-area: display;
@@ -137,7 +137,7 @@ gamedoy-console > gamedoy-actions {
 @media (max-width: 349px) {
   gamedoy-actions {
     flex-direction: column-reverse;
-    gap: var(--scale1);
+    gap: var(--gdy-s1);
   }
   gamedoy-actions::part(button) {
     position: unset;
@@ -147,7 +147,7 @@ gamedoy-console > gamedoy-actions {
 /* Game display */
 gamedoy-display {
   aspect-ratio: 1 / 1;
-  padding: var(--scale-1);
+  padding: var(--gdy-s-1);
   background-color: #000;
   border-radius: 6px;
   width: 100vw;
@@ -190,26 +190,26 @@ gamedoy-dpad::part(button) {
 gamedoy-dpad::part(up) {
   grid-area: up;
   border-bottom-width: 0;
-  border-top-left-radius: var(--scale);
-  border-top-right-radius: var(--scale);
+  border-top-left-radius: var(--gdy-s);
+  border-top-right-radius: var(--gdy-s);
 }
 gamedoy-dpad::part(left) {
   grid-area: left;
   border-right-width: 0;
-  border-top-left-radius: var(--scale);
-  border-bottom-left-radius: var(--scale);
+  border-top-left-radius: var(--gdy-s);
+  border-bottom-left-radius: var(--gdy-s);
 }
 gamedoy-dpad::part(down) {
   grid-area: down;
   border-top-width: 0;
-  border-bottom-left-radius: var(--scale);
-  border-bottom-right-radius: var(--scale);
+  border-bottom-left-radius: var(--gdy-s);
+  border-bottom-right-radius: var(--gdy-s);
 }
 gamedoy-dpad::part(right) {
   grid-area: right;
   border-left-width: 0;
-  border-top-right-radius: var(--scale);
-  border-bottom-right-radius: var(--scale);
+  border-top-right-radius: var(--gdy-s);
+  border-bottom-right-radius: var(--gdy-s);
 }
 gamedoy-dpad::part(center) {
   background-color: rgba(255, 255, 255, 0.4);

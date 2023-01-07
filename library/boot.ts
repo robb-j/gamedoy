@@ -3,8 +3,6 @@ import { CanvasContext2D, create2dCanvas } from './display.js'
 import { Runtime } from './gamedoy.js'
 
 interface Params {
-  width?: number
-  height?: number
   title?: string
   version?: string
 }
@@ -13,14 +11,9 @@ export async function setup(
   { disposables, setDisplay, finish }: Runtime,
   params: Params
 ) {
-  const {
-    width = 400,
-    height = 400,
-    title = 'Gamedoy',
-    version = 'v1.2.3',
-  } = params
+  const { title = 'Gamedoy', version = 'v1.2.3' } = params
 
-  const canvas = create2dCanvas(width, height)
+  const canvas = create2dCanvas(400, 400)
   disposables.add(setDisplay(canvas.elem))
 
   await playIntro(canvas, title, version)

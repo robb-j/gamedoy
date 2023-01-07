@@ -13,14 +13,15 @@
     },
     "run" : {
       "enabled" : true,
+      "path" : "scripts\/build-docs.sh",
       "preActions" : [
         {
           "action" : "build",
           "taskName" : "Library",
           "type" : "runTask"
         }
-      ],
-      "script" : "#!\/bin\/sh\n.\/scripts\/build-docs.sh --serve"
+      ]
     }
-  }
+  },
+  "persistent" : true
 }
