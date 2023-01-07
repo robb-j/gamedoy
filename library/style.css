@@ -1,41 +1,3 @@
-/* Set core body defaults */
-body {
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
-  font-family: system-ui;
-  font-size: min(28px, calc(12px + 3vw));
-  touch-action: manipulation;
-}
-
-/* Box sizing rules */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Remove default margin */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
-blockquote,
-dl,
-dd {
-  margin: 0;
-}
-
-/* Inherit fonts for inputs and buttons */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
 /* https://www.fontspace.com/pixeboy-font-f43730 */
 @font-face {
   font-family: 'Pixeboy';
@@ -44,12 +6,9 @@ select {
   font-style: normal;
 }
 
-/* TODO: remove styles? */
-
 /* Styles */
 
 :root {
-  /* --gdy-theme: hsl(131, 65%, 61%); */
   --gdy-theme: #3cdd59;
   /* --gdy-theme: #016fb9; */
   /* --gdy-theme: #ff6b6c; */
@@ -72,6 +31,7 @@ select {
   --gdy-s5: calc(var(--gdy-s4) * var(--gdy-ratio));
 }
 
+/* General buttons */
 gamedoy-actions::part(button),
 gamedoy-dpad::part(button) {
   margin: 0;
@@ -91,10 +51,12 @@ gamedoy-dpad::part(button):active {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Gameboy */
+/*
+  === GAMEDOY ===
+*/
 gamedoy-console {
-  width: 100vw;
-  height: var(--gdy-window-height, 100vh);
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: var(--gdy-theme);
@@ -144,30 +106,33 @@ gamedoy-console > gamedoy-actions {
   }
 }
 
-/* Game display */
+/*
+  === DISPLAY ===
+*/
 gamedoy-display {
-  aspect-ratio: 1 / 1;
-  padding: var(--gdy-s-1);
+  --frame: var(--gdy-s-1);
+
+  padding: var(--frame);
   background-color: #000;
   border-radius: 6px;
-  width: 100vw;
-  height: 100vh;
-  max-width: 400px;
-  max-height: 400px;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: calc(400px + calc(2 * var(--frame)));
+  max-height: calc(100vh - calc(3 * var(--frame)));
 }
 gamedoy-display::part(frame) {
   position: relative;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1/1;
   color: white;
   background-color: #555;
-  display: block;
-}
+  overflow: hidden;
 
-/* TODO: does this work? */
-gamedoy-display::part(frame) > * {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
 }
 
 /*

@@ -5,18 +5,22 @@ import { CompositeDisposable, Disposable } from './disposables.js'
 import { GamedoyDpad } from './dpad.js'
 import { KeyboardSource } from './keyboard.js'
 
-export interface Runtime<State = null, Result = undefined> {
+export interface Runtime<State = null, Result = void> {
   controls: Controls
-  finish(result?: Result): void
+  finish(result: Result): void
   state: State
   disposables: CompositeDisposable
-  setDisplay(elem: HTMLElement | null): Disposable
+  setDisplay(elem: Node | null): Disposable
 }
 
-export interface Scene<Params = any, State = any, Result = any> {
-  setup(runtime: Runtime<null, Result>, params: Params): State | Promise<State>
+export interface Scene<State, Params extends unknown[], Result> {
+  setup(
+    runtime: Runtime<null, Result>,
+    ...params: Params
+  ): State | Promise<State>
+
   update?(runtime: Runtime<State, Result>, dt: number): void
-  teardown?(runtime: Runtime<State, Result>): Result | Promise<Result>
+  teardown?(runtime: Runtime<State, Result>): void | Promise<void>
 }
 
 const template = document.createElement('template')
@@ -72,14 +76,14 @@ export class Gamedoy extends HTMLElement {
     ])
   }
 
-  async runScene<Params, State, Result>(
-    scene: Scene<Params, State, Result>,
-    params: Params
+  async run<State = null, Params extends unknown[] = [], Result = void>(
+    scene: Scene<State, Params, Result>,
+    ...params: Params
   ): Promise<Result> {
     const ac = new AbortController()
 
     const result = await new Promise<Result>(async (resolve) => {
-      const initialRuntime = this.createRuntime<Result>(resolve)
+      const initialRuntime = this.createRuntime((r: Result) => resolve(r))
 
       ac.signal.addEventListener('abort', () => {
         initialRuntime.disposables.dispose()
@@ -88,9 +92,8 @@ export class Gamedoy extends HTMLElement {
 
       const runtime = {
         ...initialRuntime,
-        state: await scene.setup(initialRuntime, params),
+        state: await scene.setup(initialRuntime, ...params),
       }
-      // runtime.state = await scene.setup(runtime, params)
 
       ac.signal.addEventListener('abort', () => {
         if (scene.teardown) scene.teardown(runtime)
@@ -119,24 +122,30 @@ export class Gamedoy extends HTMLElement {
   }
 
   createRuntime<R>(finish: (r: R) => void): Runtime<null, R> {
-    const frame = this.display.frameElement
-
-    function setDisplay(elem: HTMLElement | null) {
-      console.debug('setDisplay', elem)
-      if (elem && frame.childElementCount > 0) {
-        throw new Error('display is already set')
-      }
-      while (frame.firstChild) frame.removeChild(frame.firstChild)
-      if (elem) frame.appendChild(elem)
-      return { dispose: () => setDisplay(null) }
-    }
-
     return {
       controls: this.controls,
       disposables: new CompositeDisposable(),
-      setDisplay,
+      setDisplay: createSetDisplay(this.display.frameElement),
       finish,
       state: null,
     }
   }
+}
+
+function createSetDisplay(frame: HTMLElement) {
+  function setDisplay(elem: Node | null) {
+    console.debug('setDisplay', elem)
+
+    if (elem && frame.childElementCount > 0) {
+      throw new Error('display is already set')
+    }
+
+    while (frame.firstChild) frame.removeChild(frame.firstChild)
+
+    if (elem) frame.appendChild(elem)
+
+    return { dispose: () => setDisplay(null) }
+  }
+
+  return setDisplay
 }

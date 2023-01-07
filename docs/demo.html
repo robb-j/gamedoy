@@ -12,6 +12,26 @@
       defer
     ></script>
     {% endif %}
+    <style>
+      /* Set core body defaults */
+      body {
+        margin: 0;
+        text-rendering: optimizeSpeed;
+        line-height: 1.5;
+        font-family: system-ui;
+        font-size: min(28px, calc(12px + 3vw));
+        touch-action: manipulation;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* Box sizing rules */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+    </style>
   </head>
   <body>
     <gamedoy-console></gamedoy-console>

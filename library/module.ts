@@ -5,5 +5,6 @@ export * from './disposables.js'
 export * from './dpad.js'
 export * from './gamedoy.js'
 export * from './keyboard.js'
+export * from './utils.js'
 
 export * as bootScene from './boot.js'

@@ -47,9 +47,9 @@ async function main() {
   /** @type {Gamedoy} */
   const gamedoy = document.querySelector('gamedoy-console')
 
-  await gamedoy.runScene(bootScene, {})
+  await gamedoy.run(bootScene, {})
 
-  await gamedoy.runScene(helloWorld, {})
+  await gamedoy.run(helloWorld, {})
 }
 
 main()
