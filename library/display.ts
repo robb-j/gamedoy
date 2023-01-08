@@ -28,7 +28,6 @@ export function create2dCanvas(
 
 const template = document.createElement('template')
 template.innerHTML = `
-<style> :host > div > * { width: 100%; height: 100%; } </style>
 <div part="frame"></div>
 `
 

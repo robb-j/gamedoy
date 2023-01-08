@@ -2,7 +2,7 @@
   "index.ignored_file_patterns" : [
     "dist\/*"
   ],
-  "workspace.color" : 9,
+  "workspace.color" : 2,
   "workspace.name" : "gamedoy",
   "workspace.preview_append_paths" : false,
   "workspace.preview_type" : "custom",

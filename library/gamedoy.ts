@@ -142,6 +142,15 @@ function createSetDisplay(frame: HTMLElement) {
 
     while (frame.firstChild) frame.removeChild(frame.firstChild)
 
+    if (
+      elem &&
+      !(elem instanceof HTMLCanvasElement) &&
+      elem instanceof HTMLElement
+    ) {
+      elem.style.width = '400px'
+      elem.style.height = '400px'
+    }
+
     if (elem) frame.appendChild(elem)
 
     return { dispose: () => setDisplay(null) }

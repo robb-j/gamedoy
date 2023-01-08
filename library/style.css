@@ -29,18 +29,24 @@
   --gdy-s3: calc(var(--gdy-s2) * var(--gdy-ratio));
   --gdy-s4: calc(var(--gdy-s3) * var(--gdy-ratio));
   --gdy-s5: calc(var(--gdy-s4) * var(--gdy-ratio));
+
+  --frame: var(--gdy-s-1);
+  --display: calc(400px + calc(2 * var(--frame)));
+  --gutter: var(--gdy-s);
+  --line: var(--gdy-s-5);
 }
 
 /* General buttons */
 gamedoy-actions::part(button),
 gamedoy-dpad::part(button) {
   margin: 0;
-  border: var(--gdy-s-5) solid rgba(0, 0, 0, 0.25);
+  border: var(--line) solid rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 255, 255, 0.4);
   font-size: 24px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
-  -webkit-user-select: none !important;
+
+  user-select: none !important;
   font-family: 'Pixeboy', ui-monospace, monospace;
   /* TODO — parcel ignores the prefixed if this is set */
   /* user-select: none !important; */
@@ -57,17 +63,15 @@ gamedoy-dpad::part(button):active {
 gamedoy-console {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   background-color: var(--gdy-theme);
-  padding: var(--gdy-s);
+  padding: var(--gutter);
 
   display: grid;
-  grid-template: 1fr 1fr / 1fr 1fr;
+  grid-template: min(calc(100% - 150px - var(--frame)), var(--display)) auto / 1fr 1fr;
   grid-template-areas:
     'display display'
     'dpad    actions';
-  gap: var(--gdy-s-1);
+  gap: var(--gutter);
 }
 gamedoy-console > gamedoy-display {
   grid-area: display;
@@ -87,19 +91,20 @@ gamedoy-console > gamedoy-actions {
   align-self: center;
 }
 /* Ngage mode */
-@media (min-width: 772px) {
+@media (min-width: 799px) {
   gamedoy-console {
-    grid-template-columns: max-content max-content max-content;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: 100%;
     grid-template-areas: 'dpad display actions';
-    justify-content: space-between;
+    align-items: center;
+  }
+  gamedoy-display {
   }
 }
 /* Mini mode */
 @media (max-width: 349px) {
   gamedoy-actions {
     flex-direction: column-reverse;
-    gap: var(--gdy-s1);
   }
   gamedoy-actions::part(button) {
     position: unset;
@@ -110,22 +115,22 @@ gamedoy-console > gamedoy-actions {
   === DISPLAY ===
 */
 gamedoy-display {
-  --frame: var(--gdy-s-1);
-
   padding: var(--frame);
   background-color: #000;
   border-radius: 6px;
 
-  width: 100%;
   aspect-ratio: 1 / 1;
-  max-width: calc(400px + calc(2 * var(--frame)));
-  max-height: calc(100vh - calc(3 * var(--frame)));
+  max-width: min(var(--display), 100%);
+  max-height: min(var(--display), calc(100vh - calc(3 * var(--frame))));
+
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
 }
 gamedoy-display::part(frame) {
   position: relative;
-  max-width: 100%;
-  max-height: 100%;
-  aspect-ratio: 1/1;
+  width: 100%;
+  height: 100%;
   color: white;
   background-color: #555;
   overflow: hidden;
@@ -146,11 +151,9 @@ gamedoy-dpad {
     'left center right'
     '.    down      .';
   touch-action: none;
-  margin: -1rem;
-  padding: 1rem;
 }
 gamedoy-dpad::part(button) {
-  padding: 0;
+  /* padding: 0; */
 }
 gamedoy-dpad::part(up) {
   grid-area: up;
@@ -186,21 +189,18 @@ gamedoy-dpad::part(center) {
 /*
   === ACTIONS ===
 */
-
 gamedoy-actions {
   display: flex;
   gap: 1em;
   justify-content: center;
   touch-action: none;
 }
-
 gamedoy-actions::part(button) {
-  padding: 24px;
   line-height: 1rem;
   font-size: 2rem;
   border-radius: 100%;
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   filter: drop-shadow(-1px 2px 3px rgba(0, 0, 0, 0.1));
 }
 @media (min-width: 350px) {
