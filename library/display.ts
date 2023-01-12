@@ -1,3 +1,6 @@
+import { Disposable } from './disposables.js'
+import { baseStyle, css, html } from './utils.js'
+
 export interface CanvasContext<T> {
   elem: HTMLCanvasElement
   width: number
@@ -27,19 +30,71 @@ export function create2dCanvas(
 }
 
 const template = document.createElement('template')
-template.innerHTML = `
-<div part="frame"></div>
-`
+template.innerHTML = html` <slot></slot> `
+
+const style = new CSSStyleSheet()
+style.replaceSync(css`
+  :host {
+    padding: var(--frame);
+    background-color: #000;
+    border-radius: 6px;
+
+    aspect-ratio: 1 / 1;
+    max-width: min(var(--display), 100%);
+    max-height: min(var(--display), calc(100vh - calc(3 * var(--frame))));
+
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+  slot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #555;
+    overflow: hidden;
+
+    /* make children fill the slot */
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+`)
 
 export class GamedoyDisplay extends HTMLElement {
-  get frameElement() {
-    return this.shadowRoot!.querySelector('div') as HTMLElement
+  get slotElement() {
+    return this.shadowRoot!.querySelector('slot') as HTMLSlotElement
   }
 
   constructor() {
     super()
 
-    this.attachShadow({ mode: 'open' })
-    this.shadowRoot!.appendChild(template.content.cloneNode(true))
+    const root = this.attachShadow({ mode: 'open' })
+    root.appendChild(template.content.cloneNode(true))
+    root.adoptedStyleSheets = [baseStyle, style]
+  }
+
+  setCurrent(elem: Element | null): Disposable {
+    console.debug('setDisplay', elem)
+
+    if (elem && this.childElementCount > 0) {
+      throw new Error('display is already set')
+    }
+
+    while (this.firstChild) this.removeChild(this.firstChild)
+
+    if (
+      elem &&
+      !(elem instanceof HTMLCanvasElement) &&
+      elem instanceof HTMLElement
+    ) {
+      elem.style.width = '400px'
+      elem.style.height = '400px'
+    }
+
+    if (elem) this.append(elem)
+
+    return { dispose: () => this.setCurrent(null) }
   }
 }

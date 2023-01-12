@@ -2,26 +2,11 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "path" : "scripts\/build-docs.sh",
-      "preActions" : [
-        {
-          "action" : "build",
-          "taskName" : "Library",
-          "type" : "runTask"
-        }
-      ]
+      "path" : "scripts\/build-docs.sh"
     },
     "run" : {
       "enabled" : true,
-      "path" : "scripts\/build-docs.sh",
-      "preActions" : [
-        {
-          "action" : "build",
-          "taskName" : "Library",
-          "type" : "runTask"
-        }
-      ]
+      "path" : "scripts\/build-docs.sh"
     }
-  },
-  "persistent" : true
+  }
 }

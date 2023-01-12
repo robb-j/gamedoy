@@ -5,7 +5,6 @@ import {
   Gamedoy,
   html,
   Runtime,
-  Scene,
 } from './module.js'
 
 const helloWorld = {
@@ -36,8 +35,12 @@ const listStyle = css`
     text-align: center;
   }
 `
-const listTemplate = html`
-  ${listStyle.outerHTML}
+
+const listTemplate = document.createElement('template')
+listTemplate.innerHTML = html`
+  <style>
+    ${listStyle}
+  </style>
   <div class="listScene">
     <p>Option A</p>
     <p>Option B</p>

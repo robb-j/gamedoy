@@ -5,15 +5,61 @@ import {
   getInputFromPart,
   vibrate,
 } from './controls.js'
+import { baseStyle, css, html } from './utils.js'
 
 const template = document.createElement('template')
-template.innerHTML = `
-<button part="button up">▲</button>
-<button part="button left">◀</button>
-<button part="button down">▼</button>
-<button part="button right">▶</button>
-<div part="center"></div>
+template.innerHTML = html`
+  <button part="button up">▲</button>
+  <button part="button left">◀</button>
+  <button part="button down">▼</button>
+  <button part="button right">▶</button>
+  <div part="center"></div>
 `
+
+const style = new CSSStyleSheet()
+style.replaceSync(css`
+  :host {
+    display: grid;
+    grid-template: repeat(3, 50px) / repeat(3, 50px);
+    grid-template-areas:
+      '.    up    .    '
+      'left center right'
+      '.    down      .';
+    touch-action: none;
+  }
+  :host::part(button) {
+  }
+  :host::part(up) {
+    grid-area: up;
+    border-bottom-width: 0;
+    border-top-left-radius: var(--gdy-s);
+    border-top-right-radius: var(--gdy-s);
+  }
+  :host::part(left) {
+    grid-area: left;
+    border-right-width: 0;
+    border-top-left-radius: var(--gdy-s);
+    border-bottom-left-radius: var(--gdy-s);
+  }
+  :host::part(down) {
+    grid-area: down;
+    border-top-width: 0;
+    border-bottom-left-radius: var(--gdy-s);
+    border-bottom-right-radius: var(--gdy-s);
+  }
+  :host::part(right) {
+    grid-area: right;
+    border-left-width: 0;
+    border-top-right-radius: var(--gdy-s);
+    border-bottom-right-radius: var(--gdy-s);
+  }
+  :host::part(center) {
+    background-color: rgba(255, 255, 255, 0.4);
+    grid-area: center;
+
+    pointer-events: none;
+  }
+`)
 
 export class GamedoyDpad extends HTMLElement implements GameInputSource {
   onInputDown?: (action: GameInput) => void
@@ -22,9 +68,9 @@ export class GamedoyDpad extends HTMLElement implements GameInputSource {
   constructor() {
     super()
 
-    this.attachShadow({ mode: 'open' })
-    this.shadowRoot!.appendChild(template.content.cloneNode(true))
-    // this.appendChild(template.content.cloneNode(true))
+    const root = this.attachShadow({ mode: 'open' })
+    root.appendChild(template.content.cloneNode(true))
+    root.adoptedStyleSheets = [baseStyle, style]
 
     for (const elem of this.shadowRoot!.querySelectorAll<HTMLButtonElement>(
       'button'

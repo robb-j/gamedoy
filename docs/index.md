@@ -26,7 +26,6 @@ Setup a HTML document like kinda this:
     <title>🎮 Gamedoy</title>
     <meta charset="utf8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="https://gamedoy.r0b.io/style.css" />
   </head>
   <body>
     <gamedoy-console></gamedoy-console>

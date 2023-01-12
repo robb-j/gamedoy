@@ -4,13 +4,14 @@ import { Controls, GamedoyControls } from './controls.js'
 import { CompositeDisposable, Disposable } from './disposables.js'
 import { GamedoyDpad } from './dpad.js'
 import { KeyboardSource } from './keyboard.js'
+import { baseStyle, config, css, html } from './utils.js'
 
 export interface Runtime<State = null, Result = void> {
   controls: Controls
   finish(result: Result): void
   state: State
   disposables: CompositeDisposable
-  setDisplay(elem: Node | null): Disposable
+  setDisplay(elem: Element | null): Disposable
 }
 
 export interface Scene<State, Params extends unknown[], Result> {
@@ -24,17 +25,60 @@ export interface Scene<State, Params extends unknown[], Result> {
 }
 
 const template = document.createElement('template')
-template.innerHTML = `
-<gamedoy-display></gamedoy-display>
-<gamedoy-dpad></gamedoy-dpad>
-<gamedoy-actions></gamedoy-actions>
+template.innerHTML = html`
+  <gamedoy-display part="display"></gamedoy-display>
+  <gamedoy-dpad part="dpad"></gamedoy-dpad>
+  <gamedoy-actions part="actions"></gamedoy-actions>
 `
+
+const style = new CSSStyleSheet()
+style.replaceSync(css`
+  :host {
+    width: 100%;
+    height: 100%;
+    background-color: var(--gdy-theme);
+    padding: var(--gutter);
+
+    display: grid;
+    grid-template: min(calc(100% - 150px - var(--frame)), var(--display)) auto / 1fr 1fr;
+    grid-template-areas:
+      'display display'
+      'dpad    actions';
+    gap: var(--gutter);
+  }
+  :host::part(display) {
+    grid-area: display;
+    justify-self: center;
+    background: black;
+  }
+  :host::part(dpad) {
+    grid-area: dpad;
+
+    justify-self: flex-start;
+    align-self: center;
+  }
+  :host::part(actions) {
+    grid-area: actions;
+
+    justify-self: flex-end;
+    align-self: center;
+  }
+  /* Ngage mode */
+  @media (min-width: ${config.ngageModeSize - 1}px) {
+    :host {
+      grid-template-columns: 1fr max-content 1fr;
+      grid-template-rows: 100%;
+      grid-template-areas: 'dpad display actions';
+      align-items: center;
+    }
+  }
+`)
 
 export class Gamedoy extends HTMLElement {
   controls: GamedoyControls
 
   queryChild<T extends HTMLElement = HTMLElement>(selector: string) {
-    const elem = this.querySelector<T>(selector)
+    const elem = this.shadowRoot?.querySelector<T>(selector)
     if (!elem) throw new TypeError(`'${selector}' not found`)
     return elem
   }
@@ -59,15 +103,15 @@ export class Gamedoy extends HTMLElement {
     customElements.define('gamedoy-dpad', GamedoyDpad)
     customElements.define('gamedoy-actions', GamedoyActions)
     customElements.define('gamedoy-display', GamedoyDisplay)
+    document.adoptedStyleSheets = [baseStyle]
   }
 
   constructor() {
     super()
 
-    // TODO: you can't style nested custom elements so this doesn't use `shadowRoot`
-    // this.attachShadow({ mode: 'open' })
-    // this.shadowRoot!.appendChild(template.content.cloneNode(true))
-    this.appendChild(template.content.cloneNode(true))
+    const root = this.attachShadow({ mode: 'open' })
+    root.appendChild(template.content.cloneNode(true))
+    root.adoptedStyleSheets = [baseStyle, style]
 
     this.controls = new GamedoyControls([
       this.dpad,
@@ -125,36 +169,9 @@ export class Gamedoy extends HTMLElement {
     return {
       controls: this.controls,
       disposables: new CompositeDisposable(),
-      setDisplay: createSetDisplay(this.display.frameElement),
+      setDisplay: (elem) => this.display.setCurrent(elem),
       finish,
       state: null,
     }
   }
-}
-
-function createSetDisplay(frame: HTMLElement) {
-  function setDisplay(elem: Node | null) {
-    console.debug('setDisplay', elem)
-
-    if (elem && frame.childElementCount > 0) {
-      throw new Error('display is already set')
-    }
-
-    while (frame.firstChild) frame.removeChild(frame.firstChild)
-
-    if (
-      elem &&
-      !(elem instanceof HTMLCanvasElement) &&
-      elem instanceof HTMLElement
-    ) {
-      elem.style.width = '400px'
-      elem.style.height = '400px'
-    }
-
-    if (elem) frame.appendChild(elem)
-
-    return { dispose: () => setDisplay(null) }
-  }
-
-  return setDisplay
 }
