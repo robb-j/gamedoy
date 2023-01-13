@@ -1,5 +1,5 @@
 import { Disposable } from './disposables.js'
-import { baseStyle, css, html, ShadowStyle } from './utils.js'
+import { baseStyle, config, css, html, ShadowStyle } from './utils.js'
 
 export interface CanvasContext<T> {
   elem: HTMLCanvasElement
@@ -38,6 +38,8 @@ style.replaceSync(css`
     padding: var(--frame);
     background-color: #000;
     border-radius: 6px;
+    /* border: var(--frame) solid black; */
+    box-sizing: border-box;
 
     aspect-ratio: 1 / 1;
     max-width: min(var(--display), 100%);
@@ -59,6 +61,11 @@ style.replaceSync(css`
     display: flex;
     justify-content: stretch;
     align-items: stretch;
+  }
+  @media (max-width: ${config.ngageModeSize}px) {
+    :host {
+      max-height: 60vh;
+    }
   }
 `)
 

@@ -40,7 +40,7 @@ style.replaceSync(css`
     padding: var(--gutter);
 
     display: grid;
-    grid-template: min(calc(100% - 150px - var(--frame)), var(--display)) auto / 1fr 1fr;
+    grid-template: max-content auto / 1fr 1fr;
     grid-template-areas:
       'display display'
       'dpad    actions';
