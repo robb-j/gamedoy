@@ -68,7 +68,7 @@ baseStyle.replaceSync(css`
   /* https://www.fontspace.com/pixeboy-font-f43730 */
   @font-face {
     font-family: 'Pixeboy';
-    src: url('/Pixeboy.ttf') format('opentype');
+    src: url('/fonts/Pixeboy.ttf') format('opentype');
     font-weight: 400;
     font-style: normal;
   }

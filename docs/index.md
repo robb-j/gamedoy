@@ -89,6 +89,6 @@ Then serve your HTML over HTTP and visit it in your web browser.
 npx serve .
 ```
 
-## Next
+**Next**
 
-[Game development](./game-dev/)
+[Game development →](./game-dev/)

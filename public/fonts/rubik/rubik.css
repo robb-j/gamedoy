@@ -1,0 +1,16 @@
+/*
+  FONTS
+*/
+@font-face {
+  font-family: 'Rubik';
+  src: url(./Rubik-VariableFont_wght.woff2) format('woff2-variations');
+  font-weight: 300 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url(./Rubik-Italic-VariableFont_wght.woff2) format('woff2-variations');
+  font-weight: 300 900;
+  font-style: italic;
+}

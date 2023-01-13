@@ -5,7 +5,8 @@
     <meta charset="utf8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content="Eleventy" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="{{ '/fonts/rubik/rubik.css' | url }}">
+    <link rel="stylesheet" href="{{ '/docs.css' | url }}">
     {% if env.NODE_ENV == 'production' %}
     <script
       src="https://intelligent-chilly.r0b.io/script.js"
@@ -15,6 +16,14 @@
     {% endif %}
   </head>
   <body>
-    {{ content | safe }}
+    <main class="flow">
+      {{ content | safe }}
+    </main>
+    <footer>
+      Thank you for visiting! This site was made by
+      <a href="https://www.r0b.io">Rob</a>
+      & is 
+      <a href="https://github.com/robb-j/gamedoy">Open Source</a>
+    </footer>
   </body>
 </html>

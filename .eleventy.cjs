@@ -20,7 +20,7 @@ module.exports = function (eleventyConfig) {
     cp.execFileSync('./scripts/build-library.sh')
   })
 
-  eleventyConfig.addPassthroughCopy({ 'public/*.ttf': '.' })
+  eleventyConfig.addPassthroughCopy({ public: '.' })
 
   return {
     dir: {

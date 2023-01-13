@@ -8,6 +8,6 @@ npx esbuild \
   --platform=browser \
   --outdir=dist \
   --loader:.ttf=file \
-    library/module.ts library/demo.ts
+    library/module.ts library/docs.css library/demo.ts
 
 npx tsc
