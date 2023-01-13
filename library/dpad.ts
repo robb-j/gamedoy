@@ -5,7 +5,7 @@ import {
   getInputFromPart,
   vibrate,
 } from './controls.js'
-import { baseStyle, css, html } from './utils.js'
+import { baseStyle, css, html, ShadowStyle } from './utils.js'
 
 const template = document.createElement('template')
 template.innerHTML = html`
@@ -16,7 +16,7 @@ template.innerHTML = html`
   <div part="center"></div>
 `
 
-const style = new CSSStyleSheet()
+const style = new ShadowStyle()
 style.replaceSync(css`
   :host {
     display: grid;
@@ -70,7 +70,7 @@ export class GamedoyDpad extends HTMLElement implements GameInputSource {
 
     const root = this.attachShadow({ mode: 'open' })
     root.appendChild(template.content.cloneNode(true))
-    root.adoptedStyleSheets = [baseStyle, style]
+    ShadowStyle.patch(root, [baseStyle, style])
 
     for (const elem of this.shadowRoot!.querySelectorAll<HTMLButtonElement>(
       'button'

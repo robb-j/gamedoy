@@ -1,5 +1,5 @@
 import { Disposable } from './disposables.js'
-import { baseStyle, css, html } from './utils.js'
+import { baseStyle, css, html, ShadowStyle } from './utils.js'
 
 export interface CanvasContext<T> {
   elem: HTMLCanvasElement
@@ -32,7 +32,7 @@ export function create2dCanvas(
 const template = document.createElement('template')
 template.innerHTML = html` <slot></slot> `
 
-const style = new CSSStyleSheet()
+const style = new ShadowStyle()
 style.replaceSync(css`
   :host {
     padding: var(--frame);
@@ -72,7 +72,7 @@ export class GamedoyDisplay extends HTMLElement {
 
     const root = this.attachShadow({ mode: 'open' })
     root.appendChild(template.content.cloneNode(true))
-    root.adoptedStyleSheets = [baseStyle, style]
+    ShadowStyle.patch(root, [baseStyle, style])
   }
 
   setCurrent(elem: Element | null): Disposable {

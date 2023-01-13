@@ -4,7 +4,7 @@ import { Controls, GamedoyControls } from './controls.js'
 import { CompositeDisposable, Disposable } from './disposables.js'
 import { GamedoyDpad } from './dpad.js'
 import { KeyboardSource } from './keyboard.js'
-import { baseStyle, config, css, html } from './utils.js'
+import { baseStyle, config, css, html, ShadowStyle } from './utils.js'
 
 export interface Runtime<State = null, Result = void> {
   controls: Controls
@@ -31,7 +31,7 @@ template.innerHTML = html`
   <gamedoy-actions part="actions"></gamedoy-actions>
 `
 
-const style = new CSSStyleSheet()
+const style = new ShadowStyle()
 style.replaceSync(css`
   :host {
     width: 100%;
@@ -103,7 +103,7 @@ export class Gamedoy extends HTMLElement {
     customElements.define('gamedoy-dpad', GamedoyDpad)
     customElements.define('gamedoy-actions', GamedoyActions)
     customElements.define('gamedoy-display', GamedoyDisplay)
-    document.adoptedStyleSheets = [baseStyle]
+    ShadowStyle.patch(document, [baseStyle])
   }
 
   constructor() {
@@ -111,7 +111,7 @@ export class Gamedoy extends HTMLElement {
 
     const root = this.attachShadow({ mode: 'open' })
     root.appendChild(template.content.cloneNode(true))
-    root.adoptedStyleSheets = [baseStyle, style]
+    ShadowStyle.patch(root, [baseStyle, style])
 
     this.controls = new GamedoyControls([
       this.dpad,

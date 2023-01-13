@@ -4,7 +4,7 @@ import {
   GameInputSource,
   getInputFromPart,
 } from './controls.js'
-import { baseStyle, config, css } from './utils.js'
+import { baseStyle, config, css, ShadowStyle } from './utils.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -12,7 +12,7 @@ template.innerHTML = `
 <button part="button b">B</button>
 `
 
-const style = new CSSStyleSheet()
+const style = new ShadowStyle()
 style.replaceSync(css`
   :host {
     display: flex;
@@ -57,7 +57,7 @@ export class GamedoyActions extends HTMLElement implements GameInputSource {
 
     const root = this.attachShadow({ mode: 'open' })
     root.appendChild(template.content.cloneNode(true))
-    root.adoptedStyleSheets = [baseStyle, style]
+    ShadowStyle.patch(root, [baseStyle, style])
 
     for (const elem of this.shadowRoot!.querySelectorAll<HTMLButtonElement>(
       'button'
