@@ -173,6 +173,7 @@ nav {
   padding-inline: var(--space-l);
   display: flex;
   justify-content: space-between;
+  gap: var(--space-s);
 }
 nav > a {
   font-weight: bold;
@@ -186,6 +187,8 @@ nav ul {
   margin: 0;
   padding: 0;
   gap: var(--space-s);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 nav ul a {
   color: var(--color-secondary);
