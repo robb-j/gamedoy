@@ -38,7 +38,6 @@ style.replaceSync(css`
     padding: var(--frame);
     background-color: #000;
     border-radius: 6px;
-    /* border: var(--frame) solid black; */
     box-sizing: border-box;
 
     aspect-ratio: 1 / 1;

@@ -1,6 +1,6 @@
 export const config = {
   miniModeSize: 350,
-  ngageModeSize: 760,
+  ngageModeSize: 780,
 }
 
 function reconstruct<T extends unknown[]>(

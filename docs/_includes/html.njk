@@ -16,13 +16,22 @@
     {% endif %}
   </head>
   <body>
+    <nav>
+      <a href="{{ '/' | url }}">Gamedoy</a>
+      <ul role="list">
+        <li><a href="{{ '/demo' }}">[Demo]</a></li>
+        <li><a href="{{ '/install' }}">Install</a></li>
+        <li><a href="{{ '/game-dev' }}">Game dev</a></li>
+        <li><a href="{{ '/run-games' }}">Run games</a></li>
+      </ul>
+    </nav>
     <main class="flow">
       {{ content | safe }}
     </main>
     <footer>
       Thank you for visiting! This site was made by
       <a href="https://www.r0b.io">Rob</a>
-      & is 
+      and is 
       <a href="https://github.com/robb-j/gamedoy">Open Source</a>
     </footer>
   </body>

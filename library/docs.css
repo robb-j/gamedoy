@@ -72,14 +72,16 @@ select {
   --color-primary-glare: #cdeed7;
   --color-secondary: #66438f;
   --color-secondary-glare: #e6d7f7;
-  --color-dark: #21222c;
-  --color-light: #f2f2f6;
+  --color-dark: #353750;
+  --color-light: #dcdff8;
   --space-s: clamp(1rem, 0.92rem + 0.39vw, 1.25rem);
   --space-m: clamp(1.5rem, 1.38rem + 0.58vw, 1.875rem);
   --space-l: clamp(2rem, 1.84rem + 0.78vw, 2.5rem);
+  --size-step-0: clamp(1rem, 0.92rem + 0.39vw, 1.25rem);
   --size-step-1: clamp(1.1875rem, 1.01rem + 0.87vw, 1.75rem);
   --size-step-2: clamp(1.4375rem, 1.11rem + 1.65vw, 2.5rem);
-  --size-step-3: clamp(1.75rem, 1.19rem + 2.82vw, 3.5625 rem);
+  --size-step-3: clamp(1.75rem, 1.19rem + 2.82vw, 3.5625rem);
+  --size-step-4: clamp(2.0625rem, 1.15rem + 4.56vw, 5rem);
 
   /* COMPUTED */
   --gutter: var(--space-s-m);
@@ -103,12 +105,12 @@ select {
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-light: #21222c;
-    --color-dark: #edefff;
+    --color-dark: #cacde5;
+    --color-light: #242638;
 
     --color-primary: #60c07b;
     --color-primary-glare: #243629;
-    --color-secondary: #815cac;
+    --color-secondary: #9975c3;
     --color-secondary-glare: #392b48;
 
     --prism-background: #202b3f;
@@ -127,6 +129,9 @@ body {
   font-family: var(--font-base);
   line-height: 1.4;
   letter-spacing: var(--tracking);
+
+  display: flex;
+  flex-direction: column;
 }
 h1,
 h2,
@@ -134,14 +139,14 @@ h3 {
   line-height: 1;
   letter-spacing: var(--tracking-s);
 }
-hi {
-  font-size: var(--size-step-5);
-}
-h2 {
+h1 {
   font-size: var(--size-step-4);
 }
+h2 {
+  font-size: var(--size-step-3);
+}
 h3 {
-  font-size: var (--size-step-3);
+  font-size: var (--size-step-2);
 }
 a {
   color: var(--color-primary);
@@ -154,12 +159,36 @@ main {
   margin-inline: auto;
   padding-inline: 1em;
   margin-block: 3em;
+  flex: 1;
+  width: 100%;
 }
 footer {
   text-align: center;
   padding: var(--space-l);
   padding-block-end: var(--space-s);
   font-size: 0.8em;
+}
+nav {
+  padding-block-start: var(--space-s);
+  padding-inline: var(--space-l);
+  display: flex;
+  justify-content: space-between;
+}
+nav > a {
+  font-weight: bold;
+  text-decoration: none;
+}
+nav > a:hover {
+  text-decoration: underline;
+}
+nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: var(--space-s);
+}
+nav ul a {
+  color: var(--color-secondary);
 }
 blockquote {
   background: var(--color-secondary-glare);
@@ -170,13 +199,27 @@ blockquote {
 }
 pre,
 code {
-  font-size: 0.9rem;
   font-family: var(--font-mono);
 }
 pre {
+  font-size: 0.9rem;
   background-color: var(--prism-background);
   padding: var(--space-s);
   border-radius: 0.3em;
+}
+p > code {
+  padding: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  background-color: var(--color-secondary-glare);
+  border-radius: 0.3em;
+}
+hr {
+  --flow-space: var(--space-l);
+  margin-block: var(--space-l);
+  border: none;
+  border-bottom: 5px dashed var(--color-secondary);
 }
 
 /* 

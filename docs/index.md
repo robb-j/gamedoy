@@ -89,6 +89,10 @@ Then serve your HTML over HTTP and visit it in your web browser.
 npx serve .
 ```
 
-**Next**
+---
 
-[Game development →](./game-dev/)
+Next:
+
+- [Install →]({{ '/install/' | url }})
+- [Game dev →]({{ '/game-dev/' | url }})
+- [Run games]({{ '/run-games' | url }})

@@ -1,5 +1,4 @@
 import { Disposable } from './disposables.js'
-import { css } from './utils.js'
 
 export type GameInput = 'A' | 'B' | 'UP' | 'DOWN' | 'LEFT' | 'RIGHT'
 export interface GameInputListener {

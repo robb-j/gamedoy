@@ -5,7 +5,7 @@ import {
   Gamedoy,
   html,
   Runtime,
-} from './module.js'
+} from './mod.js'
 
 const helloWorld = {
   setup({ disposables, setDisplay, finish, controls }: Runtime) {
