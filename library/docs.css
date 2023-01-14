@@ -206,6 +206,8 @@ pre {
   background-color: var(--prism-background);
   padding: var(--space-s);
   border-radius: 0.3em;
+  max-width: 100%;
+  overflow-x: auto;
 }
 p > code {
   padding: 0.2em;
