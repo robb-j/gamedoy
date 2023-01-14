@@ -150,7 +150,7 @@ export function setup({ disposables, setDisplay, controls }: Runtime) {
 }
 ```
 
-A disposable is actually just this, so you can call that method to manually or create your own if you like.
+A disposable is actually just one of these, so you can call `dispose` yourself on them or create your own if you like.
 
 ```ts
 interface Disposable {
@@ -197,7 +197,7 @@ export function teardown({ state }: Runtime<State>) {
 
 ### create2dCanvas
 
-If you want to draw things, a HTMLCanvas is what you might want, and there is a helper to create one of those for you, `create2dCanvas`. Import it from the game lib, and call it to create a `CanvasContext`. CanvasContext is an object that wraps the canvas `elem`, the `width` and `height` and a drawing `ctx` that you can use to render things. This works nicely when stored in your [state](#state).
+If you want to draw things, a HTMLCanvas is what you might want, and there is a helper to create one of those for you, `create2dCanvas`. Import it from the game lib, and call it to create a `CanvasContext2D`. It is an object that wraps the canvas `elem`, the `width` and `height` and a drawing `ctx` that you can use to render things. This works nicely when stored in your [state](#state).
 
 > It does a little magic to make the canvas look crisper by looking at window.[devicePixelRatio](https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio) and multiplying the actual size up but you only ever have to work with the width/height you pass to this method.
 
@@ -209,7 +209,7 @@ import {
 } from '@robb_j/gamedoy/mod.js'
 
 interface State {
-  canvas: CanvasContext2d
+  canvas: CanvasContext2D
 }
 
 export function setup({ setDisplay, disposables }: Runtime) {
@@ -244,7 +244,7 @@ await animate(3_000, (factor) => {
 
 ### animate2dCanvas
 
-> **Unstable** We're still working this API out
+> **Unstable** — We're still working this API out
 
 For if you want to animate between values and draw to a canvas.
 

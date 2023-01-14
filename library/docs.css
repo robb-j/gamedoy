@@ -95,7 +95,7 @@ select {
     Liberation Mono, monospace;
 
   /* CODE */
-  --prism-background: #dde6ec;
+  --prism-background: #eaf6ff;
   --prism-keyword: #cf212e;
   --prism-string: #093069;
   --prism-constant: #0350ae;
