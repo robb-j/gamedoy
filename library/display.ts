@@ -41,8 +41,6 @@ style.replaceSync(css`
     box-sizing: border-box;
 
     aspect-ratio: 1 / 1;
-    max-width: min(var(--display), 100%);
-    max-height: min(var(--display), calc(100vh - calc(3 * var(--frame))));
 
     display: flex;
     justify-content: stretch;
@@ -61,9 +59,15 @@ style.replaceSync(css`
     justify-content: stretch;
     align-items: stretch;
   }
-  @media (max-width: ${config.ngageModeSize}px) {
+
+  @media (orientation: portrait) {
     :host {
-      max-height: 60vh;
+      max-width: min(var(--display), 100%);
+    }
+  }
+  @media (orientation: landscape) {
+    :host {
+      max-height: min(var(--display), 100%);
     }
   }
 `)
@@ -90,11 +94,10 @@ export class GamedoyDisplay extends HTMLElement {
 
     while (this.firstChild) this.removeChild(this.firstChild)
 
-    if (
-      elem &&
-      !(elem instanceof HTMLCanvasElement) &&
-      elem instanceof HTMLElement
-    ) {
+    if (elem instanceof HTMLCanvasElement) {
+      elem.style.width = '100%'
+      elem.style.height = '100%'
+    } else if (elem instanceof HTMLElement) {
       elem.style.width = '400px'
       elem.style.height = '400px'
     }

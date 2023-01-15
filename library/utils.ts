@@ -1,6 +1,5 @@
 export const config = {
   miniModeSize: 350,
-  ngageModeSize: 780,
 }
 
 function reconstruct<T extends unknown[]>(
@@ -91,11 +90,12 @@ baseStyle.replaceSync(css`
 
     --frame: var(--gdy-s-1);
     --display: calc(400px + calc(2 * var(--frame)));
-    --gutter: var(--gdy-s);
+    --gutter: var(--gdy-s-1);
     --line: var(--gdy-s-5);
   }
 
   button {
+    padding: 0;
     margin: 0;
     border: var(--line) solid rgba(0, 0, 0, 0.25);
     background-color: rgba(255, 255, 255, 0.4);

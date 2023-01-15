@@ -40,7 +40,7 @@ style.replaceSync(css`
     padding: var(--gutter);
 
     display: grid;
-    grid-template: max-content auto / 1fr 1fr;
+    grid-template: minmax(0, var(--display)) auto / 1fr 1fr;
     grid-template-areas:
       'display display'
       'dpad    actions';
@@ -49,7 +49,6 @@ style.replaceSync(css`
   :host::part(display) {
     grid-area: display;
     justify-self: center;
-    background: black;
   }
   :host::part(dpad) {
     grid-area: dpad;
@@ -64,9 +63,9 @@ style.replaceSync(css`
     align-self: center;
   }
   /* Ngage mode */
-  @media (min-width: ${config.ngageModeSize - 1}px) {
+  @media (orientation: landscape) {
     :host {
-      grid-template-columns: 1fr max-content 1fr;
+      grid-template-columns: 1fr minmax(0, var(--display)) 1fr;
       grid-template-rows: 100%;
       grid-template-areas: 'dpad display actions';
       align-items: center;
