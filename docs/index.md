@@ -3,7 +3,7 @@ layout: html.njk
 title: Docs
 ---
 
-# Gamedoy docs (unstable)
+# Gamedoy docs
 
 A minimalistic fantasy console, kinda like a gameboy, for the web.
 
