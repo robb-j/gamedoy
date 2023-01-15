@@ -47,7 +47,9 @@ The update hook is **optional**. If defined, it will be called every frame (usin
 
 You get the [runtime](#runtime) object, which now has your _State_ set on it. This makes it easy to access your _State_ and and interact with the runtime.
 
-You also get the `dt` parameter which is the number of **seconds** since the last update was called. This is useful for creating frame-rate-independent interactions. Not every device will have the same frame-rate, so instead of applying constant changes each update, times any constant change by the `dt` to make the movement frame-rate-independent. This way the amount moved between ticks is proportional to the time elapsed so fast and slow devices all have the same experience.
+You also get the `dt` parameter which is the number of **seconds** since the last update was called. This is useful for creating frame-rate-independent interactions.
+
+> Not every device will have the same frame-rate, so instead of applying constant changes each update, times any constant change by the `dt` to make the movement frame-rate-independent. This way the amount moved between ticks is proportional to the time elapsed so fast and slow devices all have the same experience.
 
 The update hook must be synchronous, so any promises returned here will be ignored. It is not advised.
 
@@ -256,7 +258,7 @@ await animate2dCanvas(canvas, 3_000, (factor) => {
 })
 ```
 
-> The [boot]({{ '/library/boot.ts' | url }}) uses this quite a bit if you'd like inspiration. It uses animate under the hood and adds a bit to clear previous rendering and manage the `ctx`.
+> The [boot](https://github.com/robb-j/gamedoy/blob/main/library/boot.ts) uses this quite a bit if you'd like inspiration. It uses animate under the hood and adds a bit to clear previous rendering and manage the `ctx`.
 
 <!--
 TODO: document this
