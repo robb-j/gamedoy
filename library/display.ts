@@ -67,6 +67,7 @@ style.replaceSync(css`
   }
   @media (orientation: landscape) {
     :host {
+      height: 100%;
       max-height: min(var(--display), 100%);
     }
   }
