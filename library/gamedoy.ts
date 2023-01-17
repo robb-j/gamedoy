@@ -4,7 +4,7 @@ import { Controls, GamedoyControls } from './controls.js'
 import { CompositeDisposable, Disposable } from './disposables.js'
 import { GamedoyDpad } from './dpad.js'
 import { KeyboardSource } from './keyboard.js'
-import { baseStyle, config, css, html, ShadowStyle } from './utils.js'
+import { baseStyle, css, html, ShadowStyle } from './utils.js'
 
 export interface Runtime<State = null, Result = void> {
   controls: Controls
@@ -14,11 +14,8 @@ export interface Runtime<State = null, Result = void> {
   setDisplay(elem: Element | null): Disposable
 }
 
-export interface Scene<State, Params extends unknown[], Result> {
-  setup(
-    runtime: Runtime<null, Result>,
-    ...params: Params
-  ): State | Promise<State>
+export interface Scene<State, Params, Result> {
+  setup(runtime: Runtime<null, Result>, params: Params): State | Promise<State>
 
   update?(runtime: Runtime<State, Result>, dt: number): void
   teardown?(runtime: Runtime<State, Result>): void | Promise<void>
@@ -73,6 +70,10 @@ style.replaceSync(css`
   }
 `)
 
+export interface GamedoyOptions {
+  el?: string
+}
+
 export class Gamedoy extends HTMLElement {
   controls: GamedoyControls
 
@@ -93,7 +94,9 @@ export class Gamedoy extends HTMLElement {
     return this.queryChild<GamedoyActions>('gamedoy-actions')
   }
 
-  static setup(): void {
+  static setup(): void
+  static setup(options: { el: string }): Gamedoy
+  static setup(options: GamedoyOptions = {}): void | Gamedoy {
     if (!('customElements' in window)) {
       console.warn('customElements is not supported')
       return
@@ -103,6 +106,18 @@ export class Gamedoy extends HTMLElement {
     customElements.define('gamedoy-actions', GamedoyActions)
     customElements.define('gamedoy-display', GamedoyDisplay)
     ShadowStyle.patch(document, [baseStyle])
+
+    if (options?.el) {
+      const elem = document.querySelector(options.el)
+      if (!elem) {
+        throw new TypeError('Gamedoy not found: ' + options.el)
+      }
+      if (!(elem instanceof Gamedoy)) {
+        throw new TypeError('Not a Gamedoy: ' + options.el)
+      }
+      return elem
+    }
+    return undefined
   }
 
   constructor() {
@@ -119,9 +134,19 @@ export class Gamedoy extends HTMLElement {
     ])
   }
 
-  async run<State = null, Params extends unknown[] = [], Result = void>(
+  // TODO: There has to be a better way...
+  async run(scene: Scene<null, undefined, void>): Promise<void>
+  async run<S>(scene: Scene<S, undefined, void>): Promise<void>
+  async run<R>(scene: Scene<null, undefined, R>): Promise<R>
+  async run<P>(scene: Scene<null, P, void>, params: P): Promise<void>
+  async run<S, P>(scene: Scene<S, P, void>, params: P): Promise<void>
+  async run<S, R>(scene: Scene<S, undefined, R>): Promise<R>
+  async run<P, R>(scene: Scene<null, P, R>): Promise<R>
+  async run<S, P, R>(scene: Scene<S, P, R>, params: P): Promise<R>
+
+  async run<State, Params extends any[], Result>(
     scene: Scene<State, Params, Result>,
-    ...params: Params
+    params?: Params
   ): Promise<Result> {
     const ac = new AbortController()
 
@@ -135,7 +160,7 @@ export class Gamedoy extends HTMLElement {
 
       const runtime = {
         ...initialRuntime,
-        state: await scene.setup(initialRuntime, ...params),
+        state: await scene.setup(initialRuntime, params ?? ({} as any)),
       }
 
       ac.signal.addEventListener('abort', () => {

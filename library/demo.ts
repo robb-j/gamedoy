@@ -53,7 +53,7 @@ listTemplate.innerHTML = html`
 `
 
 const list = {
-  setup({ disposables, setDisplay, finish }: Runtime) {
+  setup({ disposables, setDisplay, finish }: Runtime<null, string>) {
     const elem = document.createElement('div')
     elem.append(listTemplate.content.cloneNode(true))
 
@@ -61,18 +61,14 @@ const list = {
 
     for (const p of elem.querySelectorAll<HTMLParagraphElement>('p')) {
       p.onclick = () => {
-        alert('You chose:' + p.textContent)
-        finish()
+        finish(p.textContent ?? 'unknown')
       }
     }
   },
 }
 
 async function main() {
-  Gamedoy.setup()
-
-  const gamedoy = document.querySelector<Gamedoy>('gamedoy-console')
-  if (!gamedoy) throw new Error('"gamedoy-console" not found')
+  const gamedoy = Gamedoy.setup({ el: 'gamedoy-console' })
 
   await gamedoy.run(bootScene, {
     version: 'v0.1.2',
@@ -80,7 +76,9 @@ async function main() {
 
   await gamedoy.run(helloWorld)
 
-  await gamedoy.run(list)
+  const answer = await gamedoy.run(list)
+
+  alert('You chose:' + answer)
 }
 
 main()

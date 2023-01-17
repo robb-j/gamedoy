@@ -2,7 +2,25 @@
   "name": "@robb_j/gamedoy",
   "version": "0.0.0",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
+  "files": [
+    "dist/*"
+  ],
+  "module": "dist/mod.js",
+  "types": "dist/mod.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*"
+    }
+  },
   "scripts": {
     "format": "prettier --write '**/*.{js,json,css,md,ts,tsx}'"
   },

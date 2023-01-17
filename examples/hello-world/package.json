@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "dependencies": {
+    "@robb_j/gamedoy": "file:../.."
+  },
+  "devDependencies": {
+    "parcel": "^2.8.2"
+  }
+}

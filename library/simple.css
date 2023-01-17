@@ -1,0 +1,19 @@
+/* Set core body defaults */
+body {
+  margin: 0;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: system-ui;
+  font-size: min(28px, calc(12px + 3vw));
+  touch-action: manipulation;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--gdy-theme);
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
