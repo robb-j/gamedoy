@@ -176,7 +176,7 @@ There are a set of tools and types you can use to help write your games. Everyth
 
 > Yes its weird you have to import a TypeScript file with .js. It's complicated.
 
-### Using TypeScript
+### TypeScript
 
 You can import the `Runtime` object from the game library which goes most of the way to writing a game in TypeScript. This helps with autocompletion and code linting. For example:
 
