@@ -290,4 +290,4 @@ export function setup({}: Runtime) {
 
 Next:
 
-- [Run games]({{ '/run-games' | url }})
+- [Run games →]({{ '/run-games' | url }})

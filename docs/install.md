@@ -62,7 +62,7 @@ npx parcel index.html
 
 Then open up `http://localhost:1234` to check it all worked! 🎉
 
-## TypeScript usage
+## TypeScript
 
 Gamedoy is written in TypeScript and all the types are included to help you write games. In fact TypeScript is the recommended way to use Gamedoy! To adapt the example above with TypeScript:
 
@@ -107,4 +107,4 @@ Then rename your `main.js` to `main.ts` and update the reference in your `index.
 Next:
 
 - [Game dev →]({{ '/game-dev/' | url }})
-- [Run games]({{ '/run-games' | url }})
+- [Run games →]({{ '/run-games' | url }})

@@ -1,5 +1,5 @@
 import { Disposable } from './disposables.js'
-import { baseStyle, config, css, html, ShadowStyle } from './utils.js'
+import { baseStyle, css, html, ShadowStyle } from './utils.js'
 
 export interface CanvasContext<T> {
   elem: HTMLCanvasElement
