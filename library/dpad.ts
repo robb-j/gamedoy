@@ -111,7 +111,6 @@ export class GamedoyDpad extends HTMLElement implements GameInputSource {
 
     theta *= 180 / Math.PI
 
-    // TODO: skip the degrees conversion
     // TR —> 315 -> 1.75 pi
     // BR -> 45  -> 0.25 pi
     // BL -> 135 -> 0.75 pi

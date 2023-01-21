@@ -105,8 +105,6 @@ baseStyle.replaceSync(css`
 
     user-select: none !important;
     font-family: 'Pixeboy', ui-monospace, monospace;
-    /* TODO — parcel ignores the prefixed if this is set */
-    /* user-select: none !important; */
   }
   button:active {
     filter: none;

@@ -128,10 +128,5 @@ export class GamedoyControls implements Controls {
   /** Put the input state back and remove all listeners */
   reset() {
     this.state = blankState()
-
-    // TODO: What should be cleaned up?
-
-    // this.listeners.keyDown = new Map()
-    // this.listeners.keyUp = new Map()
   }
 }

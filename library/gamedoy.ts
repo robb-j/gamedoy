@@ -134,7 +134,7 @@ export class Gamedoy extends HTMLElement {
     ])
   }
 
-  // TODO: There has to be a better way...
+  // There has to be a better way...
   async run(scene: Scene<null, undefined, void>): Promise<void>
   async run<S>(scene: Scene<S, undefined, void>): Promise<void>
   async run<R>(scene: Scene<null, undefined, R>): Promise<R>

@@ -261,8 +261,6 @@ await animate2dCanvas(canvas, 3_000, (factor) => {
 > The [boot](https://github.com/robb-j/gamedoy/blob/main/library/boot.ts) uses this quite a bit if you'd like inspiration. It uses animate under the hood and adds a bit to clear previous rendering and manage the `ctx`.
 
 <!--
-TODO: document this
-
 ### css
 
 If your game is HTML based and you'd like some style, `css` is here to help. It is a [template literal tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), which means you can call it with a multi-line string. It just returns the CSS string, but is useful for IDE syntax highlighting
