@@ -37,7 +37,7 @@ style.replaceSync(css`
     padding: var(--gutter);
 
     display: grid;
-    grid-template: minmax(0, var(--display)) auto / 1fr 1fr;
+    grid-template: minmax(auto, var(--display)) 1fr / 1fr 1fr;
     grid-template-areas:
       'display display'
       'dpad    actions';
@@ -62,7 +62,7 @@ style.replaceSync(css`
   /* Ngage mode */
   @media (orientation: landscape) {
     :host {
-      grid-template-columns: 1fr minmax(0, var(--display)) 1fr;
+      grid-template-columns: 1fr minmax(auto, var(--display)) 1fr;
       grid-template-rows: 100%;
       grid-template-areas: 'dpad display actions';
       align-items: center;
@@ -76,6 +76,7 @@ export interface GamedoyOptions {
 
 export class Gamedoy extends HTMLElement {
   controls: GamedoyControls
+  isReady: () => Promise<void>
 
   queryChild<T extends HTMLElement = HTMLElement>(selector: string) {
     const elem = this.shadowRoot?.querySelector<T>(selector)
@@ -95,7 +96,7 @@ export class Gamedoy extends HTMLElement {
   }
 
   static setup(): void
-  static setup(options: { el: string }): Gamedoy
+  static setup<T extends { el: string }>(options: T): Gamedoy
   static setup(options: GamedoyOptions = {}): void | Gamedoy {
     if (!('customElements' in window)) {
       console.warn('customElements is not supported')
@@ -132,6 +133,10 @@ export class Gamedoy extends HTMLElement {
       this.actions,
       new KeyboardSource(),
     ])
+
+    // Tick so that the inline Pixeboy font has loaded
+    const ready = new Promise<void>((resolve) => setTimeout(() => resolve(), 1))
+    this.isReady = () => ready
   }
 
   // There has to be a better way...

@@ -73,10 +73,6 @@ style.replaceSync(css`
 `)
 
 export class GamedoyDisplay extends HTMLElement {
-  get slotElement() {
-    return this.shadowRoot!.querySelector('slot') as HTMLSlotElement
-  }
-
   constructor() {
     super()
 
@@ -88,11 +84,13 @@ export class GamedoyDisplay extends HTMLElement {
   setCurrent(elem: Element | null): Disposable {
     console.debug('setDisplay', elem)
 
-    if (elem && this.childElementCount > 0) {
+    const slot = this
+
+    if (elem && slot.childElementCount > 0) {
       throw new Error('display is already set')
     }
 
-    while (this.firstChild) this.removeChild(this.firstChild)
+    while (slot.firstChild) slot.removeChild(slot.firstChild)
 
     if (elem instanceof HTMLCanvasElement) {
       elem.style.width = '100%'
@@ -102,7 +100,7 @@ export class GamedoyDisplay extends HTMLElement {
       elem.style.height = '400px'
     }
 
-    if (elem) this.append(elem)
+    if (elem) slot.append(elem)
 
     return { dispose: () => this.setCurrent(null) }
   }

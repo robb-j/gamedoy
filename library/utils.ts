@@ -1,3 +1,5 @@
+import Pixeboy from '../public/fonts/Pixeboy.woff2'
+
 export const config = {
   miniModeSize: 350,
 }
@@ -67,7 +69,7 @@ baseStyle.replaceSync(css`
   /* https://www.fontspace.com/pixeboy-font-f43730 */
   @font-face {
     font-family: 'Pixeboy';
-    src: url('/fonts/Pixeboy.ttf') format('opentype');
+    src: url('data:font/woff2;charset=utf-8;base64,${Pixeboy}') format('woff2');
     font-weight: 400;
     font-style: normal;
   }

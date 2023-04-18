@@ -59,9 +59,7 @@ export class GamedoyActions extends HTMLElement implements GameInputSource {
     root.appendChild(template.content.cloneNode(true))
     ShadowStyle.patch(root, [baseStyle, style])
 
-    for (const elem of this.shadowRoot!.querySelectorAll<HTMLButtonElement>(
-      'button'
-    )) {
+    for (const elem of root.querySelectorAll<HTMLButtonElement>('button')) {
       const action = getInputFromPart(elem.part)
       if (action) bindInput(elem, action, this)
     }
