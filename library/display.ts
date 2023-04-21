@@ -92,6 +92,7 @@ export class GamedoyDisplay extends HTMLElement {
 
     while (slot.firstChild) slot.removeChild(slot.firstChild)
 
+    // TODO: block non "replace" elements?
     if (elem instanceof HTMLCanvasElement) {
       elem.style.width = '100%'
       elem.style.height = '100%'
