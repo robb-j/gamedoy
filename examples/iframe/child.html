@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>Child page</title>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <div id="game">Hello, there</div>
+    <style>
+      html {
+        color: white;
+      }
+    </style>
+    <script type="module">
+      import { ibus, iruntime } from '@robb_j/gamedoy'
+
+      let score = 0
+      const runtime = iruntime(window)
+
+      runtime.controls.onKeyDown('A', () => {
+        runtime.finish({ score })
+      })
+      runtime.controls.onKeyUp('B', () => {
+        score++
+      })
+
+      // let score = 0
+      // const bus = ibus(window)
+      //
+      // bus.addEventListener('onKeyDown', (payload) => {
+      //   if (payload.key === 'A') {
+      //     bus.emit('finish', { score })
+      //   } else {
+      //     score++
+      //   }
+      // })
+      // bus.addEventListener('onKeyUp', (payload) => {
+      //   console.log('up key=%s', payload.key)
+      // })
+
+      setTimeout(() => {
+        game.textContent += ' ... General Kenobi'
+      }, 2000)
+    </script>
+  </body>
+</html>

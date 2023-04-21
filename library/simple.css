@@ -17,3 +17,7 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+iframe {
+  border: 0;
+}

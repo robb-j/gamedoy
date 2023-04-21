@@ -6,5 +6,6 @@ export * from './dpad.js'
 export * from './gamedoy.js'
 export * from './keyboard.js'
 export * from './utils.js'
+export * from './iframe.js'
 
 export * as bootScene from './boot.js'

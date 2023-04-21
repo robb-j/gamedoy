@@ -6,6 +6,7 @@ node_modules
 .DS_Store
 *.env
 dist
+.parcel-cache
 
 examples/**/.parcel-cache
 examples/**/package-lock.json
