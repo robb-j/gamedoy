@@ -264,7 +264,7 @@ await animate2dCanvas(canvas, 3_000, (factor) => {
 
 To separate concerns, you can develop your game as an iframe instead of as embedded JavaScript. Gamedoy provides these utilities to help with that.
 
-You can create a [iframeScene](#iframeScene) to launch your iframe right in the normal Gamedoy screen, then you can use [ibus](#ibus) or [iruntime](#iruntime) within that iframe to easily interact with the scene. If you want to do things manually, [createIframe](#createIframe) details the communication between iframes & Gamedoy.
+You can create a [iframeScene](#iframescene) to launch your iframe right in the normal Gamedoy screen, then you can use [ibus](#ibus) or [iruntime](#iruntime) within that iframe to easily interact with the scene. If you want to do things manually, [createIframe](#createiframe) details the communication between iframes & Gamedoy.
 
 ### iframeScene
 
