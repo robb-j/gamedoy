@@ -5,8 +5,8 @@
     <meta charset="utf8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content="Eleventy" />
-    <link rel="stylesheet" href="{{ '/fonts/rubik/rubik.css' | url }}">
-    <link rel="stylesheet" href="{{ '/docs.css' | url }}">
+    <link rel="stylesheet" href="{{ '/fonts/rubik/rubik.css' | url }}" />
+    <link rel="stylesheet" href="{{ '/docs.css' | url }}" />
   </head>
   <body>
     <nav>
@@ -18,13 +18,11 @@
         <li><a href="{{ '/run-games' }}">Run games</a></li>
       </ul>
     </nav>
-    <main class="flow">
-      {{ content | safe }}
-    </main>
+    <main class="flow">{{ content | safe }}</main>
     <footer>
       Thank you for visiting! This site was made by
       <a href="https://www.r0b.io">Rob</a>
-      and is 
+      and is
       <a href="https://github.com/robb-j/gamedoy">Open Source</a>
     </footer>
   </body>

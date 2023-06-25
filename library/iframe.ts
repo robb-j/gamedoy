@@ -4,7 +4,6 @@ import { Runtime } from './gamedoy.js'
 
 const ALL_KEYS: GameInput[] = ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B']
 
-/** @unstable */
 export function iframeScene(url: string, options: IframeOptions) {
   const setup = (r: Runtime) => {
     r.disposables.add(createIframe(url, r, options))
@@ -13,7 +12,6 @@ export function iframeScene(url: string, options: IframeOptions) {
   return { setup }
 }
 
-/** @unstable */
 export interface IframeOptions {
   width: number
   height: number
@@ -21,17 +19,22 @@ export interface IframeOptions {
   allowFullscreen?: boolean
 }
 
-/** @unstable */
+export interface IframeContext {
+  elem: HTMLIFrameElement
+  dispose(): void
+}
+
 export function createIframe(
   url: string,
   runtime: Runtime,
   options: IframeOptions
-): Disposable {
+): IframeContext {
   // Create the iframe element
   const elem = document.createElement('iframe')
   elem.width = options.width.toString()
   elem.height = options.height.toString()
   elem.src = url
+  elem.dataset.gamedoy = 'v1'
   elem.setAttribute('frameborder', '0')
   if (options.allow) elem.allow = options.allow
   if (options.allowFullscreen) elem.allowFullscreen = elem.allowFullscreen
@@ -67,14 +70,15 @@ export function createIframe(
 
   // TODO: send a "teardown" and wait for a response?
 
-  return disposable
+  const dispose = () => disposable.dispose()
+
+  return { elem, dispose }
 }
 
 // stolen from:
 // https://github.com/digitalinteraction/portals/blob/main/src/lib/event-emitter.ts
 //
 
-/** @unstable */
 export type EventListener<T extends any[] = any> = (...args: T) => void
 
 interface EventEmitter {

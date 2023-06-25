@@ -212,7 +212,7 @@ pre {
   max-width: 100%;
   overflow-x: auto;
 }
-p > code {
+:not(pre) > code {
   padding: 0.2em;
   margin: 0;
   font-size: 85%;

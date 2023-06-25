@@ -25,7 +25,7 @@
     "format": "prettier --write '**/*.{js,json,css,md,ts,tsx}'"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.2",
+    "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
     "esbuild": "^0.16.13",
     "husky": "^8.0.3",

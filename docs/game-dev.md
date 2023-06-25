@@ -246,7 +246,7 @@ await animate(3_000, (factor) => {
 
 ### animate2dCanvas
 
-> **Unstable** — We're still working this API out
+> **Unstable**
 
 For if you want to animate between values and draw to a canvas.
 
@@ -259,6 +259,98 @@ await animate2dCanvas(canvas, 3_000, (factor) => {
 ```
 
 > The [boot](https://github.com/robb-j/gamedoy/blob/main/library/boot.ts) uses this quite a bit if you'd like inspiration. It uses animate under the hood and adds a bit to clear previous rendering and manage the `ctx`.
+
+## Iframes
+
+To separate concerns, you can develop your game as an iframe instead of as embedded JavaScript. Gamedoy provides these utilities to help with that.
+
+You can create a [iframeScene](#iframeScene) to launch your iframe right in the normal Gamedoy screen, then you can use [ibus](#ibus) or [iruntime](#iruntime) within that iframe to easily interact with the scene. If you want to do things manually, [createIframe](#createIframe) details the communication between iframes & Gamedoy.
+
+### iframeScene
+
+Creates a scene that shows a webpage on the screen. You can optionally pass `allow` to the options grant extra permissions, it's the same as the attribute on an `<iframe>` element.
+
+```ts
+import { iframeScene } from '@robb_j/gamedoy/mod.js'
+
+const scene = iframeScene('https://example.com/', {
+  width: 400,
+  height: 400,
+})
+```
+
+> [Run an iframe →]({{ '/run-games/#iframes' | url }})
+
+### createIframe
+
+`createIframe` is used under-the-hood by `iframeScene` to create the `<iframe>` element, and bind it to the `Runtime` object by posting and receiving events from the frame. It returns a [Disposable](#disposables) to remove the iframe from Gamedoy.
+
+```ts
+import { createIframe } from '@robb_j/gamedoy/mod.js'
+
+const iframe = createIframe('https://example.com', runtime, {
+  width: 400,
+  height: 400,
+})
+```
+
+The messages between the scene and iframe are transmitted through an [ibus](#ibus), the scene sends these events to the iframe:
+
+- `onKeyUp` is the same as the method on [controls](#controls), the payload is an object with `key` of the action being pressed.
+- `onKeyDown` is also the same as on [controls](#controls), the payload is the same as `onKeyUp`.
+
+In return the scene listens for these events to be sent from the iframe:
+
+- `finish` tells the scene that the iframe has run to completion and the game is over, it should send an object with `score` as a number. Its the same as [finish](#finish) on the runtime.
+
+The iframe element has `data-gamedoy="v1"` set on it so that you can detect that your page is being run by Gamedoy.
+
+```ts
+// Inside your iframe
+const version = window.frameElement?.dataset.gamedoy
+```
+
+### ibus
+
+`ibus` creates an an event bus to communicate between with iframe using `postMessage`. It adds a layer on top of `postMessage` & `addEventListener` to allow different types of messages to be transmitted. The bus has these methods on it:
+
+- `emit` to send a message to the window
+- `addEventListener` to listen for an event from the window
+- `removeEventListener` to stop listening to an event from the window
+
+```ts
+import { ibus } from '@robb_j/gamedoy/mod.js'
+
+const bus = ibus(window)
+
+// Listen for key presses from the window
+bus.addEventListener('onKeyDown', (payload) => {
+  console.log('key down', payload.key)
+})
+
+// At some point later, tell the scene the game is over
+bus.emit('finish', { score: 7 })
+```
+
+### iruntime
+
+`iruntime` is a helper to create a [runtime](#runtime) from within an iframe. It works by using an `ibus` to emulate the runtime API.
+
+```ts
+import { iruntime } from '@robb_j/gamedoy'
+
+const runtime = iruntime(window)
+
+// Increment the score when they press A
+runtime.controls.onKeyDown('A', () => {
+  score++
+})
+
+// Finish the game when they press B
+runtime.controls.onKeyUp('B', () => {
+  runtime.finish({ score })
+})
+```
 
 <!--
 ### css

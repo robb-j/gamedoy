@@ -116,6 +116,51 @@ function main() {
 main()
 ```
 
+## iframes
+
+If you've created an [iframe-based]({{ '/game-dev/#iframes' | url }}) scene, you can run it like this:
+
+```js
+import { Gamedoy, iframeScene } from '@robb_j/gamedoy'
+
+function main() {
+  const gamedoy = Gamedoy.setup({ el: '#app' })
+
+  const scene =  = iframeScene('https://example.com', {
+    width: 400,
+    height: 400,
+    allow: 'accelerometer; gyroscope', // optional extra permissions
+  })
+
+  await gamedoy.run(scene)
+}
+
+main()
+```
+
+You can also create an iframe yourself with `createIframe` if you want more control of the scene. For example, **iframe-scene.ts** below which you can run in the same way as above:
+
+```ts
+import { iframeScene } from '@robb_j/gamedoy'
+
+interface State {
+  iframe: HTMLIframeElement
+}
+
+export function setup(runtime: Runtime<State, void>) {
+  const iframe = createIframe('https://example.com', runtime, {
+    width: 400,
+    height: 400,
+  })
+
+  // Clean up the iframe when the scene ends
+  runtime.disposables.add(iframe)
+
+  // Do something with the element...
+  return { iframe: iframe.elem }
+}
+```
+
 ---
 
 Next:
