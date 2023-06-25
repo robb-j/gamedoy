@@ -13,7 +13,7 @@ A minimalistic fantasy console, kinda like a gameboy, for the web.
 
 ## About
 
-...
+Gamedoy is a fun little fantasy console for the web to make little games in a gameboy-like container. One of the projects I'm using it for is a captive portal at work which brings up a game to play when you join the wifi.
 
 ## Usage
 
