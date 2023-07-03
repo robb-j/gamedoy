@@ -312,16 +312,18 @@ const version = window.frameElement?.dataset.gamedoy
 
 ### ibus
 
-`ibus` creates an an event bus to communicate between with iframe using `postMessage`. It adds a layer on top of `postMessage` & `addEventListener` to allow different types of messages to be transmitted. The bus has these methods on it:
+`ibus` creates an an event bus to communicate between two window objects using `postMessage`. For example the window in an iframe and the window that created the iframe. It adds a layer on top of `postMessage` & `addEventListener` to allow different types of messages to be transmitted. The bus has these methods on it:
 
 - `emit` to send a message to the window
 - `addEventListener` to listen for an event from the window
 - `removeEventListener` to stop listening to an event from the window
 
 ```ts
+// Inside an iframe
 import { ibus } from '@robb_j/gamedoy/mod.js'
 
-const bus = ibus(window)
+// Create a bus between the iframe's window and the window that created the iframe
+const bus = ibus(window, window.top)
 
 // Listen for key presses from the window
 bus.addEventListener('onKeyDown', (payload) => {

@@ -54,7 +54,7 @@ export function createIframe<R = void>(
     if (!elem.contentWindow) return
 
     // Create a bus to talk via postMessage/"message"
-    const bus = ibus(elem.contentWindow)
+    const bus = ibus(window, elem.contentWindow)
 
     // Send each key up/down event
     for (const key of ALL_KEYS) {
@@ -92,10 +92,10 @@ interface EventEmitter {
 }
 
 /** @unstable create an event bus for the window to talk via postMessage */
-export function ibus(window: Window): EventEmitter {
+export function ibus(self: Window, target: Window): EventEmitter {
   const listeners = new Map<string, EventListener[]>()
 
-  window.addEventListener('message', (event) => {
+  self.addEventListener('message', (event) => {
     try {
       const { type, payload } = JSON.parse(event.data)
       listeners.get(type)?.forEach((l) => l(payload))
@@ -105,7 +105,7 @@ export function ibus(window: Window): EventEmitter {
   })
 
   function emit(type: string, payload: unknown) {
-    window.postMessage(JSON.stringify({ type, payload }))
+    target.postMessage(JSON.stringify({ type, payload }))
   }
   function addEventListener(name: string, listener: EventListener) {
     listeners.set(name, [...(listeners.get(name) ?? []), listener])
@@ -135,7 +135,7 @@ class IframeGameInput implements GameInputSource {
 
 /** @unstable Creates a runtime for use in iframes */
 export function iruntime(window: Window, state = null): Runtime {
-  const bus = ibus(window)
+  const bus = ibus(window, window.top!)
 
   const disposables = new CompositeDisposable()
   const controls = new GamedoyControls([new IframeGameInput(bus)])
