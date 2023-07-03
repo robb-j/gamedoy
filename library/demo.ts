@@ -9,7 +9,7 @@ async function main() {
     version: 'v0.1.2',
   })
 
-  const scene = iframeScene('https://snake.andrsn.uk/', {
+  const scene = iframeScene('https://snake.andrsn.uk?gamedoy', {
     width: 400,
     height: 400,
   }) as IframeScene

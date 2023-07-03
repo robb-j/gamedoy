@@ -303,11 +303,21 @@ In return the scene listens for these events to be sent from the iframe:
 
 - `finish` tells the scene that the iframe has run to completion and the game is over, it should send an object with `score` as a number. Its the same as [finish](#finish) on the runtime.
 
-The iframe element has `data-gamedoy="v1"` set on it so that you can detect that your page is being run by Gamedoy.
+When you provide the URL for your iframe to `createIframe` or `iframeScene`, you could set an extra parameter that you can detect client-side to opt-in to gamedoy features. For example:
 
 ```ts
+// When creating your scene
+const scene = iframeScene('https://snake.andrsn.uk?gamedoy', {
+  width: 400,
+  height: 400,
+})
+
 // Inside your iframe
-const version = window.frameElement?.dataset.gamedoy
+const url = new URL(location.href)
+if (url.searchParams.has('gamedoy')) {
+  const runtime = iruntime(window)
+  // ...
+}
 ```
 
 ### ibus
