@@ -27,11 +27,13 @@
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
+    "dotenv": "^16.0.3",
     "esbuild": "^0.16.13",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "markdown-it-anchor": "^8.6.6",
     "prettier": "^2.8.1",
+    "prism-themes": "^1.9.0",
     "typescript": "^4.9.4"
   },
   "prettier": {
@@ -45,9 +47,5 @@
     "*.{js,json,css,md,ts,tsx}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "dotenv": "^16.0.3",
-    "prism-themes": "^1.9.0"
   }
 }
