@@ -1,12 +1,16 @@
 import { GameInput, GameInputSource, GamedoyControls } from './controls.js'
 import { CompositeDisposable, Disposable } from './disposables.js'
-import { Runtime } from './gamedoy.js'
+import { Runtime, Scene } from './gamedoy.js'
 
 const ALL_KEYS: GameInput[] = ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B']
 
-export function iframeScene(url: string, options: IframeOptions) {
-  const setup = (r: Runtime) => {
+export function iframeScene<R = void>(
+  url: string,
+  options: IframeOptions
+): Scene<null, undefined, R> {
+  const setup = (r: Runtime<null, R>) => {
     r.disposables.add(createIframe(url, r, options))
+    return null
   }
 
   return { setup }
@@ -24,9 +28,9 @@ export interface IframeContext {
   dispose(): void
 }
 
-export function createIframe(
+export function createIframe<R = void>(
   url: string,
-  runtime: Runtime,
+  runtime: Runtime<null, R>,
   options: IframeOptions
 ): IframeContext {
   // Create the iframe element
