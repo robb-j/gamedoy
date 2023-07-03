@@ -162,7 +162,7 @@ interface Disposable {
 
 ### setDisplay
 
-Your game needs to look nice. So you need to give the app something to put on the display. Call `setDisplay` to put an [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) in the app's screen for your players to see. What your game looks like is up to you so you can put whatever you like in there. The style of the screen makes it so the display is always square and up-to 400x400 pixels.
+Your game needs to look nice. So you need to give the app something to put on the display. Call `setDisplay` to put an [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) in the app's screen for your players to see. The style of the screen makes it so the display is always square and up-to 400x400 pixels. The element you use should be a [replaced element](https://developer.mozilla.org/en-US/docs/Web/CSS/Replaced_element) for Gamedoy's automatic sizing to work.
 
 This returns a `Disposable`, which makes it easy to remove the display afterwards using [disposables](#disposables).
 
