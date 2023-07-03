@@ -96,9 +96,6 @@ export class GamedoyDisplay extends HTMLElement {
     if (elem instanceof HTMLCanvasElement) {
       elem.style.width = '100%'
       elem.style.height = '100%'
-    } else if (elem instanceof HTMLElement) {
-      elem.style.width = '100%'
-      elem.style.height = '100%'
     }
 
     if (elem) slot.append(elem)
