@@ -105,7 +105,7 @@ export function ibus(self: Window, target: Window): EventEmitter {
   })
 
   function emit(type: string, payload: unknown) {
-    target.postMessage(JSON.stringify({ type, payload }))
+    target.postMessage(JSON.stringify({ type, payload }), '*')
   }
   function addEventListener(name: string, listener: EventListener) {
     listeners.set(name, [...(listeners.get(name) ?? []), listener])
