@@ -2,7 +2,7 @@
 
 A minimalistic fantasy console, kinda like a gameboy, for the web.
 
-> Named after [Cowdoy](https://r0b.url.lol/cowdoy)
+> Named after [Cowdoy](https://purl.r0b.io/cowdoy)
 
 [Documentation →](https://gamedoy.r0b.io/)
 
